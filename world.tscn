@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://dt3gnc5ssd3dw"]
+
+[ext_resource type="Texture2D" uid="uid://kueqj40rqq7b" path="res://193855.png" id="1_20wvf"]
+[ext_resource type="Script" path="res://Player.gd" id="1_dxtrs"]
+[ext_resource type="Texture2D" uid="uid://75pebfylrugh" path="res://marisa.png" id="2_ncx8o"]
+[ext_resource type="PackedScene" uid="uid://blg3svvge0cs7" path="res://wall.tscn" id="3_4fbr8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ljbk"]
+size = Vector2(133, 86)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8x4jn"]
+size = Vector2(136, 88)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7h5wr"]
+size = Vector2(32, 1304)
+
+[node name="World" type="Node2D"]
+
+[node name="BG" type="Sprite2D" parent="."]
+texture = ExtResource("1_20wvf")
+
+[node name="PlayerNode" type="Node2D" parent="."]
+
+[node name="Player" type="CharacterBody2D" parent="PlayerNode"]
+script = ExtResource("1_dxtrs")
+
+[node name="PlayerSprite" type="Sprite2D" parent="PlayerNode/Player"]
+position = Vector2(-25.2, 14)
+scale = Vector2(0.828571, 0.828571)
+texture = ExtResource("2_ncx8o")
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="PlayerNode/Player"]
+position = Vector2(-13.5, 21)
+shape = SubResource("RectangleShape2D_6ljbk")
+
+[node name="Detect" type="Area2D" parent="PlayerNode/Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Player/Detect"]
+position = Vector2(-12, 20)
+shape = SubResource("RectangleShape2D_8x4jn")
+
+[node name="Resetter" type="Area2D" parent="PlayerNode/Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Player/Resetter"]
+position = Vector2(-960, -4)
+shape = SubResource("RectangleShape2D_7h5wr")
+
+[node name="WallNode" parent="." instance=ExtResource("3_4fbr8")]
+position = Vector2(552, -264)
+metadata/_edit_group_ = true
+
+[node name="WallNode2" parent="." instance=ExtResource("3_4fbr8")]
+position = Vector2(824, -352)
+metadata/_edit_group_ = true
+
+[node name="WallNode3" parent="." instance=ExtResource("3_4fbr8")]
+position = Vector2(1120, -248)
+metadata/_edit_group_ = true
+
+[node name="WallNode4" parent="." instance=ExtResource("3_4fbr8")]
+position = Vector2(1408, -344)
+metadata/_edit_group_ = true
+
+[node name="WallNode5" parent="." instance=ExtResource("3_4fbr8")]
+position = Vector2(1720, -280)
+metadata/_edit_group_ = true
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(1.42, 1.42)
+
+[connection signal="body_entered" from="PlayerNode/Player/Resetter" to="PlayerNode/Player" method="_on_resetter_body_entered"]
